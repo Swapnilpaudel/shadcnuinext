@@ -1,5 +1,8 @@
 "use client";
 import React from "react";
+
+import { format } from "date-fns";
+
 import {
   Card,
   CardContent,
@@ -100,7 +103,10 @@ export default function SignUpPage() {
         size={50}
         className="text-pink-500"
       ></PersonStandingIcon>
-      <Card className="w-full max-w-sm">
+      <Card
+        className="w-full max-w-
+      m"
+      >
         <CardHeader>
           <CardTitle>Sign Up</CardTitle>
           <CardDescription>Create a new account</CardDescription>
@@ -194,9 +200,13 @@ export default function SignUpPage() {
                         <FormControl>
                           <Button
                             variant="outline"
-                            className="normal-text flex-1 flex justify-between pr-1"
+                            className="normal-case flex-1 flex justify-between pr-1"
                           >
-                            <span>Pick a date</span>
+                            {field.value ? (
+                              format(field.value, "PPP")
+                            ) : (
+                              <span>Pick a date</span>
+                            )}
                             <CalendarSearchIcon></CalendarSearchIcon>
                           </Button>
                         </FormControl>
