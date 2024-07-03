@@ -58,6 +58,8 @@ function Calendar({
         day_range_middle:
           "aria-selected:bg-accent aria-selected:text-accent-foreground",
         day_hidden: "invisible",
+
+        caption_dropdowns: "flex gap-1 ",
         ...classNames,
       }}
       components={{
@@ -68,7 +70,7 @@ function Calendar({
             useDayPicker();
 
           let selectValues: { value: string; label: string }[] = [];
-          const { currentMonth } = useNavigation();
+          const { currentMonth, goToMonth } = useNavigation();
           if (dropdownProps.name === "months") {
             selectValues = Array.from({ length: 12 }, (_, i) => {
               return {
@@ -100,7 +102,20 @@ function Calendar({
           );
 
           return (
-            <Select>
+            <Select
+              onValueChange={(newValue) => {
+                if (dropdownProps.name === " months") {
+                  const newDate = new Date(currentMonth);
+                  newDate.setMonth(parseInt(newValue));
+                  goToMonth(newDate);
+                } else if (dropdownProps.name === " years") {
+                  const newDate = new Date(currentMonth);
+                  newDate.setFullYear(parseInt(newValue));
+                  goToMonth(newDate);
+                }
+              }}
+              value={dropdownProps.value?.toString()}
+            >
               <SelectTrigger>{caption}</SelectTrigger>
               <SelectContent>
                 {selectValues.map((selectValue) => (

@@ -46,6 +46,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
+import { PasswordInput } from "@/components/ui/password-input";
 const formSchema = z
   .object({
     email: z.string().email(),
@@ -61,8 +62,18 @@ const formSchema = z
       );
       return date <= eighteenYearsAgo;
     }, "You must be at-least 18"),
+
+    password: z.string().min(8, "password must contain atleast 8 characters"),
+    passwordConfirm: z.string(),
   })
   .superRefine((data, context) => {
+    if (data.password !== data.passwordConfirm) {
+      context.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["passwordConfirm"],
+        message: "Password's don't match",
+      });
+    }
     if (data.accountType === "company" && !data.companyName) {
       context.addIssue({
         code: z.ZodIssueCode.custom,
@@ -229,6 +240,42 @@ export default function SignUpPage() {
                   </FormItem>
                 )}
               />
+
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel> Password</FormLabel>
+                    <FormControl>
+                      <PasswordInput
+                        placeholder="********"
+                        type="password"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              ></FormField>
+
+              <FormField
+                control={form.control}
+                name="passwordConfirm"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel> Password</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="********"
+                        type="password"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              ></FormField>
               <Button type="submit">Sign up</Button>
             </form>
           </Form>
