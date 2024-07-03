@@ -40,6 +40,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Popover,
   PopoverContent,
@@ -53,6 +55,10 @@ const formSchema = z
     accountType: z.enum(["personal", "company"]),
     companyName: z.string().optional(),
     numberOfEmployees: z.coerce.number().optional(),
+
+    acceptTerms: z.boolean({
+      required_error: "You must accept the terms and conditions",
+    }),
     dob: z.date().refine((date) => {
       const today = new Date();
       const eighteenYearsAgo = new Date(
@@ -265,6 +271,27 @@ export default function SignUpPage() {
                   </FormItem>
                 )}
               ></FormField>
+
+              <FormField
+                control={form.control}
+                name="acceptTerms"
+                render={({ field }) => (
+                  <FormItem>
+                    <div className="flex gap-2 items-center">
+                      <FormControl>
+                        <Checkbox
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
+                        />
+                      </FormControl>
+                      <FormLabel>I accept the terms and conditions</FormLabel>
+                    </div>
+
+                    <FormMessage />
+                  </FormItem>
+                )}
+              ></FormField>
+
               <Button type="submit">Sign up</Button>
             </form>
           </Form>
