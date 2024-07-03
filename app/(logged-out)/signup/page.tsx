@@ -114,10 +114,7 @@ export default function SignUpPage() {
         size={50}
         className="text-pink-500"
       ></PersonStandingIcon>
-      <Card
-        className="w-full max-w-
-      m"
-      >
+      <Card className="w-full max-w-sm">
         <CardHeader>
           <CardTitle>Sign Up</CardTitle>
           <CardDescription>Create a new account</CardDescription>
@@ -248,11 +245,7 @@ export default function SignUpPage() {
                   <FormItem>
                     <FormLabel> Password</FormLabel>
                     <FormControl>
-                      <PasswordInput
-                        placeholder="********"
-                        type="password"
-                        {...field}
-                      />
+                      <PasswordInput placeholder="********" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -266,11 +259,7 @@ export default function SignUpPage() {
                   <FormItem>
                     <FormLabel> Password</FormLabel>
                     <FormControl>
-                      <Input
-                        placeholder="********"
-                        type="password"
-                        {...field}
-                      />
+                      <PasswordInput placeholder="********" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
